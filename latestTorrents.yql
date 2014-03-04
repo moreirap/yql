@@ -38,7 +38,7 @@
               //torrent.appendChild(<size>{t.td[1].p.text()}</size>);
               //torrent.appendChild(<link>{t.td[2].div.a.@href}</link>);
               y.log ("value of t " + t.text());
-              torrent.appendChild(<link>{t_url}</link>);
+              results.appendChild(<link>{t_url}</link>);
 
           }
           results.appendChild(torrent);
