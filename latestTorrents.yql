@@ -31,7 +31,7 @@
           var t_xpath = '//div[contains(@class,"high_definition")]/table/tbody/tr';
           var t_query   = y.query("SELECT href FROM html WHERE url=@url AND xpath=@xpath", {url: t_url, xpath: t_xpath});
           var torrent = <torrent></torrent>;
-          results = movie;
+          results = t_query.results.tr;
       }
       response.object = results;
       ]]></execute>
