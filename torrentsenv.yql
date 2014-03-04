@@ -1,0 +1,1 @@
+use "https://raw.github.com/moreirap/yql/master/latestTorrents.yql" as latest;
