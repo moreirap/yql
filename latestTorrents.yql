@@ -12,7 +12,7 @@
         <url>http://torrentbutler.eu/hd/latest.html#better-than:60%</url>
       </urls>
       <inputs>
-        <key id="rating" type="xs:string" paramType="variable"/>
+        <key id="rating" type="xs:string" paramType="query"/>
       </inputs>
       <execute><![CDATA[
       var baseurl = "http://torrentbutler.eu";
