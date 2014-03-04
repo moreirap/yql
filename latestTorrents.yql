@@ -30,14 +30,14 @@
           var t_url = baseurl + movie.@href;
           var t_xpath = '//div[contains(@class,"high_definition")]/table/tbody/tr';
           var t_query   = y.query("SELECT href FROM html WHERE url=@url AND xpath=@xpath", {url: t_url, xpath: t_xpath});
-          var torrent = <torrent />
+          var torrent = <torrent></torrent>
           
           for each (t in t_query.results.tr) {
-              torrent.appendChild(<title>{t.th.div.span.text()}</title>);
-              torrent.appendChild(<seeds>{t.td[0].p.text()}</seeds>);
-              torrent.appendChild(<size>{t.td[1].p.text()}</size>);
-              torrent.appendChild(<link>{t.td[2].div.a.@href}</link>);
-              //torrent.appendChild(<link>{t}</link>);
+              //torrent.appendChild(<title>{t.th.div.span.text()}</title>);
+              //torrent.appendChild(<seeds>{t.td[0].p.text()}</seeds>);
+              //torrent.appendChild(<size>{t.td[1].p.text()}</size>);
+              //torrent.appendChild(<link>{t.td[2].div.a.@href}</link>);
+              torrent.appendChild(<link>{t}</link>);
           }
           results.appendChild(torrent);
       }
