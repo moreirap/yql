@@ -27,7 +27,18 @@
       var query   = y.query("SELECT href FROM html WHERE url=@url AND xpath=@xpath", {url: url, xpath: xpath});
       var results = <torrents></torrents>;
       for each (movie in query.results.a) {
-          results.appendChild(<torrent>{baseurl + movie.@href}</torrent>);
+          var t_url = baseurl + movie.@href;
+          var t_xpath = '//div[contains(@class,"high_definition")]/table/tbody/tr';
+          var t_query   = y.query("SELECT href FROM html WHERE url=@url AND xpath=@xpath", {url: t_url, xpath: t_xpath});
+          var torrent = <torrent />
+          
+          for each (t in t_query) {
+              torrent.appenchChild(<title>{t.th.div.span}</title>);
+              torrent.appenchChild(<seeds>{t.td.0.p}</seeds>);
+              torrent.appenchChild(<size>{t.td.1.p}</size>);
+              torrent.appenchChild(<link>{t.td.2.div.a.@href}</link>);
+          }
+          results.appendChild(torrent);
       }
       response.object = results;
       ]]></execute>
