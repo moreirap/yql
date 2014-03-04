@@ -25,8 +25,11 @@
       var xpath = '//div[contains(@class,"movies")]/a';
 
       var query   = y.query("SELECT href FROM html WHERE url=@url AND xpath=@xpath", {url: url, xpath: xpath});
-      var results = <results></results>; 
-      response.object = query.results;
+      var results = <torrents></torrents>;
+      for each (movie in query.results) {
+          results.appendChild(<torrent>{movie.@href}</torrent>);
+      }
+      response.object = results;
       ]]></execute>
     </select>
   </bindings>
