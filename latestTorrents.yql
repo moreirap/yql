@@ -33,7 +33,7 @@
           var moviexml = <movie></movie>;
           moviexml.@href=t_url;
 
-          if (t_query.results) {
+          if (t_query.results != undefined && t_query.results != '') {
               for each (t in t_query.results.tr) {
                   var torrent = <torrent></torrent>;              
                   torrent.appendChild(<title>{t.th.div.span.text()}</title>);
