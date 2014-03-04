@@ -41,7 +41,7 @@
           }
           results.appendChild(torrent);
       }
-      response.object = results;
+      response.object = <t>{results}</t>;
       ]]></execute>
     </select>
   </bindings>
