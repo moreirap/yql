@@ -33,11 +33,11 @@
           var torrent = <torrent />
           
           for each (t in t_query) {
-              //torrent.appenchChild(<title>{t.th.div.span.text()}</title>);
-              //torrent.appenchChild(<seeds>{t.td.0.p.text()}</seeds>);
-              //torrent.appenchChild(<size>{t.td.1.p.text()}</size>);
-              //torrent.appenchChild(<link>{t.td.2.div.a.@href}</link>);
-              torrent.appenchChild(<link>{t}</link>);
+              //torrent.appendChild(<title>{t.th.div.span.text()}</title>);
+              //torrent.appendChild(<seeds>{t.td.0.p.text()}</seeds>);
+              //torrent.appendChild(<size>{t.td.1.p.text()}</size>);
+              //torrent.appendChild(<link>{t.td.2.div.a.@href}</link>);
+              torrent.appendChild(<link>{t}</link>);
           }
           results.appendChild(torrent);
       }
