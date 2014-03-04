@@ -20,7 +20,8 @@
       if (rating != undefined) {
           url += "%23better-than%3A" + rating + "%25";
       } else {
-        url += "%23better-than%3A60%25";
+          rating = 60;
+          url += "%23better-than%3A60%25";
       }
       var xpath = '//div[contains(@class,"movies")]/a';
 
