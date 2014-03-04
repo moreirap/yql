@@ -28,7 +28,7 @@
           t_query_txt     += " limit 1 | sort (field=\"td.p\",descending=\"true\")"
 
           var t_query = y.query(t_query_txt, {url: t_url, xpath: t_xpath});
-          y.log(t_query.results);
+          
           // set main movie page
           var moviexml = <movie></movie>;
           moviexml.@href=t_url;
