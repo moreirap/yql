@@ -18,9 +18,9 @@
       var baseurl = "http://torrentbutler.eu";
       var url     =  baseurl + "/hd/latest.html";
       if (rating != undefined) {
-        url += "/" + rating;
+        url += "#better-than:%" + rating + "%";
       } else {
-        url += "/%23better-than%3A60%25";
+        url += "#better-than:60%";
       }
       var xpath = '//div[contains(@class,"movies")]/a';
 
