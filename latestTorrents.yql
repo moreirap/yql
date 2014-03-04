@@ -20,7 +20,7 @@
       if (rating != undefined) {
         url += "/" + rating;
       } else {
-        url + = "/\#better-than:60\%";
+        url + = "/%23better-than%3A60%25";
       }
       var xpath = '//div[contains(@class,"movies")]/a';
 
