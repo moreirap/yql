@@ -24,7 +24,7 @@
       }
       var xpath = '//div[contains(@class,"movies")]/a';
 
-          var query   = y.query("SELECT href FROM html WHERE url=@url AND xpath=@xpath and data-rating > @rating limit 5", {url: url, xpath: xpath , rating: rating});
+          var query   = y.query("SELECT href FROM html WHERE url=@url AND xpath=@xpath AND data-rating > \"@rating\" limit 5", {url: url, xpath: xpath , rating: rating});
       var results = <movies />;
       for each (movie in query.results.a) {
           var t_url = baseurl + movie.@href;
