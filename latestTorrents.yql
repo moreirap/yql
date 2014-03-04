@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<table xmlns="http://query.yahooapis.com/v1/schema/table.xsd">
+  <meta>
+    <author>Pedro Moreira</author>
+    <sampleQuery>SELECT * FROM {table};</sampleQuery>
+    <documentationURL></documentationURL>
+  </meta>
+  <bindings>
+    <select itemPath="" produces="XML">
+      <urls>
+        <url>http://torrentbutler.eu/hd/latest.html#better-than:60%</url>
+      </urls>
+      <inputs>
+        <key id="rating" type="xs:string" paramType="variable"/>
+      </inputs>
+      <execute><![CDATA[
+      var baseurl = "http://torrentbutler.eu";
+      var url     =  baseurl + "/hd/latest.html";
+      if (rating != undefined) {
+        url += "/" + rating;
+      } else {
+        url + = "/\#better-than:60\%";
+      }
+      var xpath = '//div[contains(@class,"movies")]/a';
+
+      var query   = y.query("SELECT href FROM html WHERE url=@url AND xpath=@xpath", {url: url, xpath: xpath});
+      var results = <results></results>; 
+      response.object = query.results;
+      ]]></execute>
+    </select>
+  </bindings>
+</table>
