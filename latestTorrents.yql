@@ -17,6 +17,7 @@
       <execute><![CDATA[
           var baseurl = "http://torrentbutler.eu";
           var results = <movies />;
+          var myRegexp = \/[0-9]+\-(.)+;
 
           for (var i=from; i <= to; i++) {
 
@@ -25,14 +26,6 @@
               var xpath   = '//a';
               var query   = y.query("SELECT href FROM html WHERE url=@url AND xpath=@xpath AND compat=\"html5\" AND data-rating > \"60\"", {url: url, xpath: xpath});
               
-              // get movie title
-              var movieTitle = "";
-              for each (part in query.results.a.strong.strong) {
-                 movieTitle+=part.text() + " "
-              }
-              movieTitle.trim();
-              movieTitle.replace(/[^a-z0-9]/gi, '_').toLowerCase();
-
               for each (movie in query.results.a) {
                   var t_url = baseurl + movie.@href;
                   var t_xpath = '//div[contains(@class,"high_definition")]/table/tbody/tr';
@@ -42,17 +35,21 @@
 
                   var t_query = y.query(t_query_txt, {url: t_url, xpath: t_xpath});
                   
-                  // set main movie page
+                  // set main movie item
                   var moviexml = <movie></movie>;
                   moviexml.@href=t_url;
 
+                  // get movie title
+                  var movieTitle = myRegexp.exec(movie.@href).match[1];
+                  movieTitle.trim();
+                  movieTitle.replace(/[^a-z0-9]/gi, '_').toLowerCase();
                   
+                  // set movie title
+                  moviexml.@title=movieTitle;
 
                   if (t_query.results != undefined && t_query.results != '') {
                       for each (t in t_query.results.tr) {
-                          var torrent = <torrent></torrent>;              
-                          
-                          torrent.appendChild(<title>{movieTitle}</title>);
+                          var torrent = <torrent></torrent>;
                           torrent.appendChild(<seeds>{t.td[0].p.text()}</seeds>);
                           torrent.appendChild(<size>{t.td[1].p.text()}</size>);
                           torrent.appendChild(<link>{t.td[2].div.a.@href}</link>);
