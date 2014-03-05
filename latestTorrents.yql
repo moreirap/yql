@@ -17,7 +17,7 @@
       <execute><![CDATA[
           var baseurl = "http://torrentbutler.eu";
           var results = <movies />;
-          var myRegexp = /\/[0-9]+\-(.)+/;
+          var myRegexp = /\/[0-9]+\-(.+)/;
 
           for (var i=from; i <= to; i++) {
 
@@ -40,7 +40,7 @@
                   moviexml.@href=t_url;
 
                   // get movie title
-                  var movieTitle = myRegexp.exec(movie.@href).match[1];
+                  var movieTitle = myRegexp.exec(movie.@href)[1];
                   movieTitle.trim();
                   movieTitle.replace(/[^a-z0-9]/gi, '_').toLowerCase();
                   
