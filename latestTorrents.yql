@@ -25,6 +25,14 @@
               var xpath   = '//a';
               var query   = y.query("SELECT href FROM html WHERE url=@url AND xpath=@xpath AND compat=\"html5\" AND data-rating > \"60\"", {url: url, xpath: xpath});
               
+              // get movie title
+              var movieTitle = "";
+              for each (part in query.results.a.strong.strong) {
+                 movieTitle+=part.text() + " "
+              }
+              movieTitle.trim();
+              movieTitle.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+
               for each (movie in query.results.a) {
                   var t_url = baseurl + movie.@href;
                   var t_xpath = '//div[contains(@class,"high_definition")]/table/tbody/tr';
@@ -38,13 +46,7 @@
                   var moviexml = <movie></movie>;
                   moviexml.@href=t_url;
 
-                  // get movie title
-                  var movieTitle = "";
-                  for each (part in a.strong.strong) {
-                     movieTitle+=part.text() + " "
-                  }
-                  movieTitle.trim();
-                  movieTitle.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+                  
 
                   if (t_query.results != undefined && t_query.results != '') {
                       for each (t in t_query.results.tr) {
