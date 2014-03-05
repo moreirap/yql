@@ -24,7 +24,7 @@
               var url     = baseurl + "/hd/latest/page/" + i;
 
               var xpath   = '//a';
-              var query   = y.query("SELECT href FROM html WHERE url=@url AND xpath=@xpath AND compat=\"html5\" AND data-rating > \"60\"", {url: url, xpath: xpath});
+              var query   = y.query("SELECT href FROM html WHERE url=@url AND xpath=@xpath AND data-rating > \"60\"", {url: url, xpath: xpath});
               
               for each (movie in query.results.a) {
                   var t_url = baseurl + movie.@href;
