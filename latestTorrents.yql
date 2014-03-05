@@ -38,10 +38,19 @@
                   var moviexml = <movie></movie>;
                   moviexml.@href=t_url;
 
+                  // get movie title
+                  var movieTitle = "";
+                  for each (part in a.strong.strong) {
+                     movieTitle+=part.text() + " "
+                  }
+                  movieTitle.trim();
+                  movieTitle.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+
                   if (t_query.results != undefined && t_query.results != '') {
                       for each (t in t_query.results.tr) {
                           var torrent = <torrent></torrent>;              
-                          torrent.appendChild(<title>{t.th.div.span.text()}</title>);
+                          
+                          torrent.appendChild(<title>{movieTitle}</title>);
                           torrent.appendChild(<seeds>{t.td[0].p.text()}</seeds>);
                           torrent.appendChild(<size>{t.td[1].p.text()}</size>);
                           torrent.appendChild(<link>{t.td[2].div.a.@href}</link>);
