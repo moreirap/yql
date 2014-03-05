@@ -12,7 +12,7 @@
       </urls>
       <inputs>
        <key id='from' type='xs:string' paramType='variable' required="false" default="1" />
-       <key id='to'   type='xs:string' paramType='variable' required="false" default="2"/>
+       <key id='to'   type='xs:string' paramType='variable' required="false" default="1"/>
       </inputs>
       <execute><![CDATA[
           var baseurl = "http://torrentbutler.eu";
