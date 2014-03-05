@@ -15,12 +15,12 @@
        <key id='to'   type='xs:string' paramType='variable' required="false" default="2"/>
       </inputs>
       <execute><![CDATA[
-          var baseurl = "http://torrentbutler.eu/hd/latest/page";
+          var baseurl = "http://torrentbutler.eu";
           var results = <movies />;
 
           for (var i=from; i <= to; i++) {
 
-              var url     = baseurl + "/" + i;
+              var url     = baseurl + "/hd/latest/page/" + i;
 
               var xpath   = '//a';
               var query   = y.query("SELECT href FROM html WHERE url=@url AND xpath=@xpath AND compat=\"html5\" AND data-rating > \"60\"", {url: url, xpath: xpath});
