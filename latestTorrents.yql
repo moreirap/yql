@@ -8,43 +8,51 @@
   <bindings>
     <select itemPath="" produces="XML">
       <urls>
-        <url>http://torrentbutler.eu/hd/latest.html#better-than:60%</url>
+       <url>http://torrentbutler.eu/hd/latest/page/{page}</url>
       </urls>
+      <inputs>
+       <key id='from' type='xs:string' paramType='variable' required="false" default="1" />
+       <key id='to'   type='xs:string' paramType='variable' required="false" default="2"/>
+      </inputs>
       <execute><![CDATA[
-      var baseurl = "http://torrentbutler.eu";
-      var url     =  baseurl + "/hd/latest.html";
-      url         += "%23better-than%3A60%25";
+          var baseurl = "http://torrentbutler.eu/hd/latest/page";
+          var results = <movies />;
 
-      var xpath   = '//div[contains(@class,"movies")]/a';
-      var query   = y.query("SELECT href FROM html WHERE url=@url AND xpath=@xpath AND compat=\"html5\" AND data-rating > \"60\" limit 20", {url: url, xpath: xpath});
-      
-      var results = <movies />;
-      for each (movie in query.results.a) {
-          var t_url = baseurl + movie.@href;
-          var t_xpath = '//div[contains(@class,"high_definition")]/table/tbody/tr';
-          var t_query_txt = "SELECT * FROM html WHERE url=@url AND xpath=@xpath";
-          t_query_txt     += " AND td.p Matches '(1.[5-9][0-9])|([2-5].[0-9]+).GB$' AND td.p Matches '^[1-9][0-9]+$'";  
-          t_query_txt     += " limit 1 | sort (field=\"td.p\",descending=\"true\")"
+          for (int i=from; i <= to; i++ ) {
 
-          var t_query = y.query(t_query_txt, {url: t_url, xpath: t_xpath});
-          
-          // set main movie page
-          var moviexml = <movie></movie>;
-          moviexml.@href=t_url;
+              var url     = baseurl + "/" + i;
 
-          if (t_query.results != undefined && t_query.results != '') {
-              for each (t in t_query.results.tr) {
-                  var torrent = <torrent></torrent>;              
-                  torrent.appendChild(<title>{t.th.div.span.text()}</title>);
-                  torrent.appendChild(<seeds>{t.td[0].p.text()}</seeds>);
-                  torrent.appendChild(<size>{t.td[1].p.text()}</size>);
-                  torrent.appendChild(<link>{t.td[2].div.a.@href}</link>);
-                  moviexml.appendChild(torrent);
+              var xpath   = '//div[contains(@class,"movies")]/a';
+              var query   = y.query("SELECT href FROM html WHERE url=@url AND xpath=@xpath AND compat=\"html5\" AND data-rating > \"60\"", {url: url, xpath: xpath});
+              
+              
+              for each (movie in query.results.a) {
+                  var t_url = baseurl + movie.@href;
+                  var t_xpath = '//div[contains(@class,"high_definition")]/table/tbody/tr';
+                  var t_query_txt = "SELECT * FROM html WHERE url=@url AND xpath=@xpath";
+                  t_query_txt     += " AND td.p Matches '(1.[5-9][0-9])|([2-5].[0-9]+).GB$' AND td.p Matches '^[1-9][0-9]+$'";  
+                  t_query_txt     += " limit 1 | sort (field=\"td.p\",descending=\"true\")"
+
+                  var t_query = y.query(t_query_txt, {url: t_url, xpath: t_xpath});
+                  
+                  // set main movie page
+                  var moviexml = <movie></movie>;
+                  moviexml.@href=t_url;
+
+                  if (t_query.results != undefined && t_query.results != '') {
+                      for each (t in t_query.results.tr) {
+                          var torrent = <torrent></torrent>;              
+                          torrent.appendChild(<title>{t.th.div.span.text()}</title>);
+                          torrent.appendChild(<seeds>{t.td[0].p.text()}</seeds>);
+                          torrent.appendChild(<size>{t.td[1].p.text()}</size>);
+                          torrent.appendChild(<link>{t.td[2].div.a.@href}</link>);
+                          moviexml.appendChild(torrent);
+                      }
+                      results.appendChild(moviexml);
+                  }
               }
-              results.appendChild(moviexml);
           }
-      }
-      response.object = results;
+          response.object = results;
       ]]></execute>
     </select>
   </bindings>
