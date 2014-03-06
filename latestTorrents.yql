@@ -11,8 +11,9 @@
        <url>http://torrentbutler.eu/hd/latest/page/{page}</url>
       </urls>
       <inputs>
-       <key id='from' type='xs:string' paramType='variable' required="false" default="1" />
-       <key id='to'   type='xs:string' paramType='variable' required="false" default="1"/>
+       <key id='from'   type='xs:string' paramType='variable' required="false" default="1" />
+       <key id='to'     type='xs:string' paramType='variable' required="false" default="1"/>
+       <key id='rating' type='xs:string' paramType='variable' required="false" default="60"/>
       </inputs>
       <execute><![CDATA[
           var baseurl = "http://torrentbutler.eu";
@@ -23,8 +24,14 @@
 
               var url     = baseurl + "/hd/latest/page/" + i;
 
-              var xpath   = '//a';
-              var query   = y.query("SELECT href FROM html WHERE url=@url AND xpath=@xpath AND data-rating > \"60\"", {url: url, xpath: xpath});
+              var xpath   = "//a[contains(@class,'movie')]";
+              var yql     = "select href from html 
+                             where url=@url 
+                             and   compat="html5" 
+                             and   xpath=@xpath
+                             and   data-rating > @rating 
+                             |     unique(field="href", hideRepeatCount="true")";
+              var query   = y.query(yql, {url: url, xpath: xpath, rating: rating});
               
               for each (movie in query.results.a) {
                   var t_url = baseurl + movie.@href;
