@@ -47,6 +47,9 @@
               var movieCount = query.results.a.length();
               y.log("movie count=" + movieCount);
 
+              var imgCount = query.results.img.length();
+              y.log("image count=" + imgCount);
+
               for (var res=0; res < movieCount; res++) {
               //for each (movie in query.results.a) {
                   var movie = query.results.a[res];
