@@ -47,7 +47,7 @@
                   var t_xpath = "//div[contains(@class,'high_definition')]/table/tbody/tr | //div[@class='synopsis']";
                   var t_query_txt = "SELECT * FROM html WHERE url=@url AND xpath=@xpath";
                   t_query_txt     += " AND (td.p Matches '(1.[5-9][0-9])|([2-5].[0-9]+).GB$' AND td.p Matches '^[1-9][0-9]+$' OR div Matches '.+')";
-                  t_query_txt     += " limit 1 | sort (field=\"td.p\",descending=\"true\")"
+                  t_query_txt     += " |    sort(field='td', descending='true') | reverse() | truncate (count=2)";
 
                   var t_query = y.query(t_query_txt, {url: t_url, xpath: t_xpath});
 
