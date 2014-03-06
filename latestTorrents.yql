@@ -43,7 +43,7 @@
               var query   = y.query(yql, {url: url, xpath: xpath, rating: rating});
               
               y.log("query=" + query);
-              var movieCount = query.results.a.length();
+              var movieCount = query.results..a.length();
               y.log("movie count=" + movieCount);
 
               for (var res=0; res < movieCount; res++) {
