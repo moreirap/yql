@@ -71,7 +71,7 @@
                           torrent.appendChild(<seeds>{t.td[0].p.text()}</seeds>);
                           torrent.appendChild(<size>{t.td[1].p.text()}</size>);
                           torrent.appendChild(<link>{t.td[2].div.a.@href}</link>);
-                          moviexml.appendChild(<synopsis>{t_query.results.div.text()}</synopsis>);
+                          moviexml.appendChild(<synopsis>{t_query.results.div[0].text()}</synopsis>);
                           moviexml.appendChild(torrent);
                       }
                       results.appendChild(moviexml);
