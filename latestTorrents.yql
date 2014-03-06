@@ -49,8 +49,8 @@
 
               for (var res=0; res < movieCount; res++) {
               //for each (movie in query.results.a) {
-                  var movie = query.results.*[res];
-                  var img   = query.results.*[res+1];
+                  var movie = query.results[res];
+                  var img   = query.results[res+1];
                   var t_url = baseurl + movie.@href;
                   var t_xpath = '//div[contains(@class,"high_definition")]/table/tbody/tr';
                   var t_query_txt = "SELECT * FROM html WHERE url=@url AND xpath=@xpath";
