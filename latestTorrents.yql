@@ -35,6 +35,7 @@
 
               var query   = y.query(yql, {url: url, xpath: xpath, rating: rating});
               
+              var movieCount = query.results.a.length();
               // loop through movies found
               for (var res=0; res < movieCount; res++) {
                   var movie = query.results.a[res];
