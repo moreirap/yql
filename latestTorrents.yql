@@ -25,9 +25,11 @@
 
               var url     = baseurl + "/hd/latest/page/" + i;
 
-              var xpath   = "//*[(name()='a' and @data-rating > 60) " 
-                          + "or (name()='img' and ancestor::*[name()='a' and @data-rating > 60])]";
+              //var xpath   = "//*[(name()='a' and @data-rating > 60) " 
+              //            + "or (name()='img' and ancestor::*[name()='a' and @data-rating > 60])]";
               
+              var xpath   = "//a | //img";
+                          
               var yql     = "select href,src from html "
                           + "where url=@url "
                           + "and   compat='html5' "
@@ -43,7 +45,7 @@
               var query   = y.query(yql, {url: url, xpath: xpath, rating: rating});
               
               var movieCount = query.results.a.length();
-              y.log("movie count=" + movie.count);
+              y.log("movie count=" + movieCount);
 
               for (var res=0; res < movieCount; res++) {
               //for each (movie in query.results.a) {
