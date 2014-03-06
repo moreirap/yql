@@ -25,16 +25,27 @@
 
               var url     = baseurl + "/hd/latest/page/" + i;
 
-              var xpath   = "//a[contains(@class,'movie')]";
-              var yql     = "select href from html "
+              var xpath   = "//*[(name()='a' and @data-rating > @rating) " 
+                          + "or (name()='img' and ancestor::*[name()='a' and @data-rating > @rating])]";
+              
+              var yql     = "select href,src from html "
                           + "where url=@url "
                           + "and   compat='html5' "
-                          + "and   xpath=@xpath "
-                          + "and   data-rating > @rating "
+                          + "and   xpath=@xpath
                           + "|     unique(field='href', hideRepeatCount='true')";
+
+              //var yql     = "select href from html "
+              //            + "where url=@url "
+              //            + "and   compat='html5' "
+              //            + "and   xpath=@xpath "
+              //            + "and   data-rating > @rating "
+              //            + "|     unique(field='href', hideRepeatCount='true')";
               var query   = y.query(yql, {url: url, xpath: xpath, rating: rating});
               
-              for each (movie in query.results.a) {
+              for (var res=0; res < query.results.count; res+=2) {
+              //for each (movie in query.results.a) {
+                  var movie = query.results[res];
+                  var img   = query.results[res+1];
                   var t_url = baseurl + movie.@href;
                   var t_xpath = '//div[contains(@class,"high_definition")]/table/tbody/tr';
                   var t_query_txt = "SELECT * FROM html WHERE url=@url AND xpath=@xpath";
@@ -54,6 +65,9 @@
                   
                   // set movie title
                   moviexml.@title=movieTitle;
+
+                  // set movie thumbnail
+                  moviexml.@img=img;
 
                   if (t_query.results != undefined && t_query.results != '') {
                       for each (t in t_query.results.tr) {
