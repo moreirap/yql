@@ -25,11 +25,11 @@
               var url     = baseurl + "/hd/latest/page/" + i;
 
               var xpath   = "//a[contains(@class,'movie')]";
-              var yql     = "select href from html 
-                             where url=@url 
-                             and   compat="html5" 
-                             and   xpath=@xpath
-                             and   data-rating > @rating 
+              var yql     = "select href from html \
+                             where url=@url \
+                             and   compat="html5" \
+                             and   xpath=@xpath \
+                             and   data-rating > @rating \ 
                              |     unique(field="href", hideRepeatCount="true")";
               var query   = y.query(yql, {url: url, xpath: xpath, rating: rating});
               
