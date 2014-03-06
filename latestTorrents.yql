@@ -27,10 +27,10 @@
               var xpath   = "//a[contains(@class,'movie')]";
               var yql     = "select href from html \
                              where url=@url \
-                             and   compat="html5" \
+                             and   compat='html5' \
                              and   xpath=@xpath \
                              and   data-rating > @rating \ 
-                             |     unique(field="href", hideRepeatCount="true")";
+                             |     unique(field='href', hideRepeatCount='true')";
               var query   = y.query(yql, {url: url, xpath: xpath, rating: rating});
               
               for each (movie in query.results.a) {
