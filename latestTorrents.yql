@@ -43,7 +43,7 @@
               var query   = y.query(yql, {url: url, xpath: xpath, rating: rating});
               
               var movieCount = query.results.a.count;
-              for (var res=0; res <=movieCount; res++) {
+              for (var res=0; res < movieCount; res++) {
               //for each (movie in query.results.a) {
                   var movie = query.results.*[res];
                   var img   = query.results.*[res+1];
