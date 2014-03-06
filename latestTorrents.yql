@@ -31,7 +31,7 @@
               var yql     = "select href,src from html "
                           + "where url=@url "
                           + "and   compat='html5' "
-                          + "and   xpath=@xpath
+                          + "and   xpath=@xpath "
                           + "|     unique(field='href', hideRepeatCount='true')";
 
               //var yql     = "select href from html "
