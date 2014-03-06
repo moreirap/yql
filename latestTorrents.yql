@@ -64,7 +64,7 @@
                   moviexml.@img=img.@src;
 
                   // loop through all torrents found (if limit is 1 above, then loop iterates only once)
-                  if (t_query.results != undefined && t_query.results != '') {
+                  if (t_query.results != undefined && t_query.results != '' && t_query.results.*.length() >= 2) {
                       for each (t in t_query.results.tr) {
                           var torrent = <torrent></torrent>;
                           torrent.appendChild(<seeds>{t.td[0].text()}</seeds>);
