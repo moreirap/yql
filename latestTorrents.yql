@@ -77,7 +77,7 @@
                   }
               }
           }
-          response.object = results.movies;
+          response.object = results;
       ]]></execute>
     </select>
   </bindings>
