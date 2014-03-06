@@ -75,7 +75,7 @@
                   moviexml.@title=movieTitle;
 
                   // set movie thumbnail
-                  moviexml.@img=img;
+                  moviexml.@img=img.@src;
 
                   if (t_query.results != undefined && t_query.results != '') {
                       for each (t in t_query.results.tr) {
