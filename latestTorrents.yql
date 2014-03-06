@@ -24,8 +24,8 @@
           for (var i=from; i <= to; i++) {
               // build movie query
               var url     = baseurl + "/hd/latest/page/" + i;
-              var xpath   = "//*[(name()='a' and @data-rating > @rating) "
-                          + "or (name()='img' and ancestor::*[name()='a' and @data-rating > @rating])]";
+              var xpath   = "//*[(name()='a' and @data-rating > 60) "
+                          + "or (name()='img' and ancestor::*[name()='a' and @data-rating > 60])]";
 
               var yql     = "select href,src from html "
                           + "where url=@url "
