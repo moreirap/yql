@@ -25,10 +25,10 @@
 
               var url     = baseurl + "/hd/latest/page/" + i;
 
-              //var xpath   = "//*[(name()='a' and @data-rating > 60) " 
-              //            + "or (name()='img' and ancestor::*[name()='a' and @data-rating > 60])]";
+              var xpath   = "//*[(name()='a' and @data-rating > 60) " 
+                          + "or (name()='img' and ancestor::*[name()='a' and @data-rating > 60])]";
               
-              var xpath   = "//a | //img";
+              //var xpath   = "//a | //img";
                           
               var yql     = "select href,src from html "
                           + "where url=@url "
