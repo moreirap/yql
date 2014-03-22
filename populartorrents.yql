@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <table securityLevel="any" xmlns="http://query.yahooapis.com/v1/schema/table.xsd">
+  <meta>
+    <author>Pedro Moreira</author>
+    <sampleQuery>SELECT * FROM {table};</sampleQuery>
+    <documentationURL></documentationURL>
+  </meta>
+  <bindings>
+    <select itemPath="" produces="XML">
+      <urls>
+       <url>http://torrentbutler.eu/hd/latest/page/{page}</url>
+      </urls>
+      <inputs>
+       <key id='from'   type='xs:string' paramType='variable' required="false" default="1" />
+       <key id='to'     type='xs:string' paramType='variable' required="false" default="1"/>
+       <key id='rating' type='xs:string' paramType='variable' required="false" default="60"/>
+      </inputs>
+      <execute><![CDATA[
+          var baseurl  = "http://torrentbutler.eu";
+          var results  = <movies />;
+          var myRegexp = /\/[0-9]+\-(.+)/;
+
+          for (var i=from; i <= to; i++) {
+              // build movie query
+              var url     = baseurl + "/hd/page/" + i;
+              var xpath   = "//*[(name()='a' and @data-rating > " + rating + ") "
+                          + "or (name()='img' and ancestor::*[name()='a' and @data-rating > " + rating + "])]";
+
+              var yql     = "select href,src from html "
+                          + "where url=@url "
+                          + "and   compat='html5' "
+                          + "and   xpath=@xpath "
+                          + "|     unique(field='href', hideRepeatCount='true')";
+
+              var query   = y.query(yql, {url: url, xpath: xpath});
+
+              var movieCount = query.results.a.length();
+
+              // loop through movies found
+              for (var res=0; res < movieCount; res++) {
+                  var movie = query.results.a[res];
+                  var img   = query.results.img[res];
+
+                  // build torrents query
+                  var t_url = baseurl + movie.@href;
+                  var t_xpath = "//div[contains(@class,'high_definition')]/table/tbody/tr | //div[@class='synopsis']";
+                  var t_query_txt = "SELECT * FROM html WHERE url=@url AND xpath=@xpath and compat='html5'";
+                  t_query_txt     += " AND (td Matches '(1.[5-9][0-9])|([2-5].[0-9]+).GB$' AND td Matches '^[1-9][0-9]+$' OR div Matches '.+')";
+                  t_query_txt     += " |    sort(field='td', descending='true') | reverse() | truncate (count=2)";
+
+                  var t_query = y.query(t_query_txt, {url: t_url, xpath: t_xpath});
+
+                  // set movie link
+                  var moviexml = <movie></movie>;
+                  moviexml.@href=t_url;
+
+                  // set movie title
+                  var movieTitle = myRegexp.exec(movie.@href)[1];
+                  movieTitle.trim();
+                  movieTitle.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+                  moviexml.@title=movieTitle;
+
+                  // set movie thumbnail
+                  moviexml.@img=img.@src;
+
+                  // loop through all torrents found (if limit is 1 above, then loop iterates only once)
+                  if (t_query.results != undefined && t_query.results != '' && t_query.results.*.length() >= 2) {
+                      for each (t in t_query.results.tr) {
+                          var torrent = <torrent></torrent>;
+                          torrent.appendChild(<seeds>{t.td[0].text()}</seeds>);
+                          torrent.appendChild(<size>{t.td[1].text()}</size>);
+                          torrent.appendChild(<link>{t.td[2].div.a.@href}</link>);
+                          moviexml.appendChild(<synopsis>{t_query.results.div[0].text()}</synopsis>);
+                          moviexml.appendChild(torrent);
+                      }
+                      results.appendChild(moviexml);
+                  }
+              }
+          }
+          response.object = results;
+      ]]></execute>
+    </select>
+  </bindings>
+</table>
