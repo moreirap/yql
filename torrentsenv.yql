@@ -1,1 +1,2 @@
 use "http://raw.github.com/moreirap/yql/master/latestTorrents.yql" as torrents;
+use "http://raw.github.com/moreirap/yql/master/populartorrents.yql" as poptorrents;
