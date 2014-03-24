@@ -16,7 +16,8 @@
        <key id='rating' type='xs:string' paramType='variable' required="false" default="60"/>
       </inputs>
       <execute><![CDATA[
-          vat timeout  = 1000*60;
+          var datetime = new Date();
+          var timeout  = 1000*60;
           var baseurl  = "http://torrentbutler.eu";
           var results  = <movies />;
           var myRegexp = /\/[0-9]+\-(.+)/;
@@ -79,6 +80,7 @@
               }
           }
           response.object = results;
+          response.header("Expires",datetime.now.adddays(-1));
       ]]></execute>
     </select>
   </bindings>
