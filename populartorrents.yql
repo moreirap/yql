@@ -80,7 +80,7 @@
               }
           }
           response.object = results;
-          response.header("Expires",datetime.now.adddays(-1));
+          result.header("Expires",datetime.now.adddays(-1));
       ]]></execute>
     </select>
   </bindings>
