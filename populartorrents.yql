@@ -16,6 +16,7 @@
        <key id='rating' type='xs:string' paramType='variable' required="false" default="60"/>
       </inputs>
       <execute><![CDATA[
+          vat timeout  = 1000*60;
           var baseurl  = "http://torrentbutler.eu";
           var results  = <movies />;
           var myRegexp = /\/[0-9]+\-(.+)/;
@@ -32,7 +33,7 @@
                           + "and   xpath=@xpath "
                           + "|     unique(field='href', hideRepeatCount='true')";
 
-              var query   = y.query(yql, {url: url, xpath: xpath});
+              var query   = y.query(yql, {url: url, xpath: xpath},timeout);
 
               var movieCount = query.results.a.length();
 
@@ -48,7 +49,7 @@
                   t_query_txt     += " AND (td Matches '(1.[5-9][0-9])|([2-5].[0-9]+).GB$' AND td Matches '^[1-9][0-9]+$' OR div Matches '.+')";
                   t_query_txt     += " |    sort(field='td', descending='true') | reverse() | truncate (count=2)";
 
-                  var t_query = y.query(t_query_txt, {url: t_url, xpath: t_xpath});
+                  var t_query = y.query(t_query_txt, {url: t_url, xpath: t_xpath},timeout);
 
                   // set movie link
                   var moviexml = <movie></movie>;
